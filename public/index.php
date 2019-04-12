@@ -1,20 +1,22 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
-use App\Presentation;
+use Slim\App;
 
 require __DIR__.'/../vendor/autoload.php';
 
-error_reporting(E_ALL);
+// config files
+include(__DIR__.'/../config/config.php');
 
-$environment = 'dev';
+$app = new App(
+    array(
+        'settings' => $config
+    )
+);
 
-$whoops = new \Whoops\Run;
+// dependency container
+include __DIR__.'/../src/container.php';
 
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+// include routes after app variables
+include __DIR__."/../src/routes.php";
 
-$whoops->register();
-
-$obj = new Presentation;
-
-echo $obj->execute();
+$app->run();
