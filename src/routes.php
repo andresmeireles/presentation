@@ -2,5 +2,6 @@
 
 use App\Controller\HomeController;
 
-$app->get("/", HomeController::class.':home');
-//$app->get("/{name}", HomeController::class.':template');
+/** @var \Slim\App */
+$app->get("/", [HomeController::class, 'home']);
+$app->get("/create", array(HomeController::class, 'presentation'));
